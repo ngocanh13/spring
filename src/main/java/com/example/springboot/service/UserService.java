@@ -38,5 +38,17 @@ public class UserService {
         return userMapper.toDTO(userRepository.save(existingUser));
     }
 
+    public void delete(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("User with ID " + id + " not found.");
+        }
+        userRepository.deleteById(id);
+    }
+    public List<UserRes> searchByName(String name) {
+        return userRepository.findByNameContainingIgnoreCase(name)
+                .stream()
+                .map(userMapper::toDTO)
+                .toList();
+    }
 
 }

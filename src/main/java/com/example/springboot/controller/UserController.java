@@ -29,6 +29,14 @@ public class UserController {
         UserRes updatedUser = userService.update(id, userReq);
         return ResponseEntity.ok(updatedUser);
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build(); // Trả về HTTP status 204 (No Content)
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<UserRes>> searchUsersByName(@RequestParam String name) {
+        return ResponseEntity.ok(userService.searchByName(name));
+    }
 
 }
